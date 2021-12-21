@@ -1,35 +1,69 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 
 void main() {
-  runApp( const MyApp());
+  return runApp(
+    MaterialApp(
+      debugShowCheckedModeBanner: false,
+      home: Scaffold(
+        backgroundColor: Colors.red,
+        appBar: AppBar(
+          title: Text('Dicee'),
+          backgroundColor: Colors.red,
+        ),
+        body: DiceeScreen(),
+      ),
+    ),
+  );
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+class DiceeScreen extends StatefulWidget {
+  @override
+  _DiceeScreenState createState() => _DiceeScreenState();
+}
 
+class _DiceeScreenState extends State<DiceeScreen> {
+  int leftDiceNumber = 1;
+  int rightDiceNumber = 1;
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
+    return Center(
+      child: Row(
+        children: [
+          Expanded(
+              child: FlatButton(
+                onPressed: (){
+                  changeNumber();
+
+                },
+                child: Padding(
+                  padding: EdgeInsets.all(20),
+                  child: Image.asset("images/dice$leftDiceNumber.png"),
+                ),
+              )
+          ),
+          Expanded(
+              child: FlatButton(
+                onPressed: (){
+                  changeNumber();
+                },
+                child: Padding(
+                  padding: EdgeInsets.all(20),
+                  child: Image.asset("images/dice$rightDiceNumber.png"),
+                ),
+              )
+          ),
+        ],
       ),
-      home: MyHomePage(),
     );
   }
-}
 
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({Key? key}) : super(key: key);
-
-  @override
-  State<MyHomePage> createState() => _MyHomePageState ();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-  @override
-  Widget build(BuildContext context) {
-    
+  void changeNumber() {
+    setState(() {
+      leftDiceNumber = Random().nextInt(6) + 1;
+      rightDiceNumber = Random().nextInt(6) + 1;
+    });
   }
 }
 
